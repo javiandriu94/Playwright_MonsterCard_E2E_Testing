@@ -16,12 +16,12 @@ class MonsterCardPage {
     }
     
 
-    async selectMonster(page: Page, monsterNumber: number) {
-        await page.click(`[data-testid="monster-${monsterNumber}"]`);
+    async selectMonster(monsterNumber: number) {
+        await this.page.click(`[data-testid="monster-${monsterNumber}"]`);
     }
 
-    async clickDeleteButton(){
-        await this.monster.deleteButton.click()
+    async clickCreateButton(){
+        await this.monster.createMonsterButton.click()
     }
 
     async InputFieldsMessageVisible() {
@@ -30,6 +30,29 @@ class MonsterCardPage {
     }
 
     async monsterNotCreated(){
+        await expect(this.monster.thereAreNoMonsterMessage).toBeVisible();
+    }
+
+      async fillMonsterForm(data: { name: string, hp: string, attack: string, defense: string, speed: string }) {
+        await this.monster.monsterInputName.fill(data.name);
+        await this.monster.monsterInputHP.fill(data.hp);
+        await this.monster.monsterInputAttack.fill(data.attack);
+        await this.monster.monsterInputDefense.fill(data.defense);
+        await this.monster.monsterInputSpeed.fill(data.speed);
+    }
+
+    async monsterCardCreated() {
+        await this.monster.yourMonsterMessage.waitFor({ state: 'visible' })
+        await expect(this.monster.yourMonsterMessage).toBeVisible();
+        await this.monster.monsterCardCreated.waitFor({ state: 'visible' })
+        await expect(this.monster.monsterCardCreated).toBeVisible();
+        
+    }
+
+    async deleteMonsterCard() {
+        await expect(this.monster.monsterCardCreated).toBeVisible();
+        await this.monster.deleteMonsterButton.click();
+        await expect(this.monster.monsterCardCreated).not.toBeVisible();
         await expect(this.monster.thereAreNoMonsterMessage).toBeVisible();
     }
 }

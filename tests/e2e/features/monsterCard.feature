@@ -10,3 +10,8 @@ Feature: Monster Card Management
     When clicks on "Create Monster"
     Then should see a validation message for required fields
     And the monster card should not be created
+
+  Scenario: Create and delete monster card with image
+    When selects a monster image and enter the data monster
+    Then a new monster card should be displayed
+    And delete the created monster card
