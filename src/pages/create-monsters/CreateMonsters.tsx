@@ -11,22 +11,17 @@ import { Monster } from '../../models/interfaces/monster.interface';
 import { CreateMonstersTestIds } from '../../constants/data-testids';
 
 const CreateMonsters = () => {
-  const [monsterInfo, setMonsterInfo] = useState<Monster | null>(null);
   const [createdMonsters, setCreatedMonsters] = useState<Monster[]>([]);
-
-  const setMonsterData = (monsterData: Monster) => {
-    setMonsterInfo(monsterData);
-  };
 
   const addToCreatedMonsters = (monsterData: Monster) => {
     if (monsterData.name !== '') {
-      setCreatedMonsters((prev) => [...prev, monsterData]);
+      setCreatedMonsters((prev: Monster[]) => [...prev, monsterData]);
     }
   };
 
   const deleteMonster = (id: string) => {
     const newMonstersList = createdMonsters.filter(
-      (monster) => monster.id !== id,
+      (monster: Monster) => monster.id !== id,
     );
     setCreatedMonsters(newMonstersList);
   };
@@ -44,7 +39,6 @@ const CreateMonsters = () => {
         <CreateMonsterForm
         data-testid="monster-form"
           getMonsterInfo={(monster: Monster) => {
-            setMonsterData(monster);
             addToCreatedMonsters(monster);
           }}
         />
