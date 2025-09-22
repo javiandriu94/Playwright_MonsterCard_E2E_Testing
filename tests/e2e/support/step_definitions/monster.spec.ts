@@ -1,45 +1,43 @@
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then, Before } from "@cucumber/cucumber";
 import MonsterCardPage from "../../pages/MonsterCardPage";
 import { monsData } from "../../fixture/monstData";
 
+Before(function () {
+  this.monsterCard = new MonsterCardPage(this.page);
+});
+
 Given('the application is open', async function () { 
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.navigateToMonsterCardApp();
+  await this.monsterCard.navigateToMonsterCardApp();
 });
 
 When('clicks on "Create Monster"',  async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.clickCreateButton();
+  await this.monsterCard.clickCreateButton();
 });
 
 Then('should see a validation message for required fields', async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.InputFieldsMessageVisible();
-  await monsterCard.monsterNotCreated();
+  await this.monsterCard.InputFieldsMessageVisible();
+  await this.monsterCard.monsterNotCreated();
 });
 
 
 Then('the monster card should not be created',  async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.monsterNotCreated();
+  await this.monsterCard.monsterNotCreated();
 });
 
 When('selects a monster image and enter the data monster',{ timeout: 60 * 1000 },  async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.selectMonster(2);
-  await monsterCard.fillMonsterForm(monsData)
-  await monsterCard.clickCreateButton()
+  
+  await this.monsterCard.selectMonster(2);
+  await this.monsterCard.fillMonsterForm(monsData)
+  await this.monsterCard.clickCreateButton()
 
 });
 
 Then('a new monster card should be displayed',  async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.monsterCardCreated()
+  await this.monsterCard.monsterCardCreated()
 })
 
 Then('delete the created monster card',  async function () {
-  const monsterCard = new MonsterCardPage(this.page);
-  await monsterCard.deleteMonsterCard()
+  await this.monsterCard.deleteMonsterCard()
 })
 
 
