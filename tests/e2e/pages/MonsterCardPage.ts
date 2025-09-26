@@ -41,19 +41,42 @@ class MonsterCardPage {
         await this.monster.monsterInputSpeed.fill(data.speed);
     }
 
-    async monsterCardCreated() {
-        await this.monster.yourMonsterMessage.waitFor({ state: 'visible' })
+   async validateMonsterCardCreated(mode = "withImage") {
+        await this.monster.yourMonsterMessage.waitFor({ state: 'visible' });
         await expect(this.monster.yourMonsterMessage).toBeVisible();
-        await this.monster.monsterCardCreated.waitFor({ state: 'visible' })
-        await expect(this.monster.monsterCardCreated).toBeVisible();
-        
-    }
 
+        await this.monster.monsterCardCreated.waitFor({ state: 'visible' });
+        
+        if (await this.monster.monsterCardCreated.count() > 0) {
+            await expect(this.monster.monsterCardCreated).toBeVisible();
+
+            const imageLink = await this.monster.imageMonsterCard.getAttribute('src');
+
+            switch (mode) {
+                case "withImage":
+                    expect(imageLink).not.toBeNull();
+                    expect(imageLink).not.toEqual('');
+                    break;
+
+                case "withoutImage":
+                    expect(imageLink === null || imageLink === '').toBeTruthy();
+                    break;
+
+                default:
+                    throw new Error(`Modo no soportado: ${mode}. Usa "withImage" o "withoutImage".`);
+            }
+        }
+    }
+    
+
+    
     async deleteMonsterCard() {
         await expect(this.monster.monsterCardCreated).toBeVisible();
         await this.monster.deleteMonsterButton.click();
         await expect(this.monster.monsterCardCreated).not.toBeVisible();
         await expect(this.monster.thereAreNoMonsterMessage).toBeVisible();
     }
+
+
 }
 export default MonsterCardPage

@@ -15,3 +15,10 @@ Feature: Monster Card Management
     When selects a monster image and enter the data monster
     Then a new monster card should be displayed
     And delete the created monster card
+
+
+  Scenario: Create and delete monster card without image
+    When enter the data monster without image
+    Then a new monster card should be displayed with default image
+
+    

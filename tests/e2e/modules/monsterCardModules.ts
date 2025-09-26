@@ -1,7 +1,6 @@
 import {Page, Locator} from '@playwright/test'
 class MonsterCardModules {
     readonly page: Page
-    readonly monsterCard: Locator = undefined as any;
     readonly monsterInputName: Locator
     readonly monsterInputHP: Locator
     readonly monsterInputDefense: Locator
@@ -13,6 +12,7 @@ class MonsterCardModules {
     readonly yourMonsterMessage: Locator
     readonly monsterCardCreated: Locator
     readonly deleteMonsterButton: Locator
+    readonly imageMonsterCard: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -27,6 +27,7 @@ class MonsterCardModules {
         this.yourMonsterMessage = page.locator('[data-testid="dynamic-title"]', {hasText: 'Your Monsters'})
         this.monsterCardCreated = page.locator('[data-testid="monster-card"]')
         this.deleteMonsterButton = page.locator('[data-testid="btn-delete"]')
+        this.imageMonsterCard = page.getByTestId('monster-image')
 
     }
 
