@@ -12,7 +12,7 @@ export class CustomWorld extends World {
 
   async init() {
     this.browser = await chromium.launch({
-      headless: false,   // Mostrar navegador
+      headless: true,   
       slowMo: 2000       // Retraso entre acciones (200ms recomendado)
     });
 
@@ -30,3 +30,4 @@ export class CustomWorld extends World {
 }
 
 setWorldConstructor(CustomWorld);
+
